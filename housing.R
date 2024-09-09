@@ -1,5 +1,11 @@
 setwd("C:/Users/fadli/OneDrive - Institut Teknologi Sepuluh Nopember/Semester 1/Statistika Bisnis (B)/Pertemuan 2/EDA_Project_1")
-dir.create("histogram")
+# Create the 'histogram' and 'plot' folder if it doesn't exist
+if (!dir.exists("histogram")) {
+  dir.create("histogram")
+}
+if (!dir.exists("plot")) {
+  dir.create("plot")
+}
 
 library(tidyr)
 library(dplyr)
@@ -47,14 +53,6 @@ print(missing_values)
 
 # Melakukan visualisasi distribusi pada masing-masing variabel
 numeric_vars <- housing %>% select_if(is.numeric)
-
-# Create the 'histogram' and 'plot' folder if it doesn't exist
-if (!dir.exists("histogram")) {
-  dir.create("histogram")
-}
-if (!dir.exists("plot")) {
-  dir.create("plot")
-}
 
 # CRIM
 summary(housing$CRIM)
@@ -285,12 +283,11 @@ p <- ggplot(housing, aes(x = MEDV, y = LSTAT)) +
   )
 print(p)
 ggsave(paste0("plot/", "MEDV_LSTAT_comparison.png"), p)
-
 # Add marginal histograms to the scatter plot
 p_with_marginals <- ggMarginal(p, type = "histogram", fill = "orange", color = "black", alpha = 0.7)
-
 # Print the plot with marginal histograms
 print(p_with_marginals)
+ggsave(paste0("plot/", "MEDV_LSTAT_marginal.png"), p_with_marginals)
 
 # Relationship between MEDV and DIS
 p <- ggplot(housing, aes(x = MEDV, y = DIS)) +
@@ -306,6 +303,11 @@ p <- ggplot(housing, aes(x = MEDV, y = DIS)) +
   )
 print(p)
 ggsave(paste0("plot/", "MEDV_DIS_comparison.png"), p)
+# Add marginal histograms to the scatter plot
+p_with_marginals <- ggMarginal(p, type = "histogram", fill = "orange", color = "black", alpha = 0.7)
+# Print the plot with marginal histograms
+print(p_with_marginals)
+ggsave(paste0("plot/", "MEDV_DIS_marginal.png"), p_with_marginals)
 
 # Relationship between MEDV and CRIM
 p <- ggplot(housing, aes(x = MEDV, y = CRIM)) +
@@ -321,3 +323,8 @@ p <- ggplot(housing, aes(x = MEDV, y = CRIM)) +
   )
 print(p)
 ggsave(paste0("plot/", "MEDV_CRIM_comparison.png"), p)
+# Add marginal histograms to the scatter plot
+p_with_marginals <- ggMarginal(p, type = "histogram", fill = "orange", color = "black", alpha = 0.7)
+# Print the plot with marginal histograms
+print(p_with_marginals)
+ggsave(paste0("plot/", "MEDV_CRIM_marginal.png"), p_with_marginals)
